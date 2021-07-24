@@ -1,0 +1,18 @@
+---
+- hosts: all
+  roles:
+    - role: elliotweiser.osx-command-line-tools
+    - role: geerlingguy.mac.homebrew
+      tags: ['homebrew']
+    - role: geerlingguy.mac.mas
+      when: mas_installed_apps or mas_installed_app_ids
+      tags: ['mas']
+
+  tasks:
+    - import_tasks: tasks/xcode.yml
+      when: configure_xcode
+      tags: ['xcode']
+
+    - import_role: name=geerlingguy.mac.dock
+      when: configure_dock
+      tags: ['dock']

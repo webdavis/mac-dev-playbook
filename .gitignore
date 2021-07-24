@@ -1,0 +1,22 @@
+# Ignore MacOS Finder metadata.
+.DS_Store
+
+# Ignore Vim swap files.
+*.sw*
+
+# Ignore the Python virtual environment
+.venv/
+
+# Ignore the Ansible Vault password file.
+ansible.vault
+
+# Ignore Ansible project roles.
+roles*
+
+# Ignore project logs. (There's no way to reasonably version control these; it's better to
+# just catch them in backups, if possible.)
+ansible.log
+logs/
+
+# Ignore Ansible retry files.
+*.retry
