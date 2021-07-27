@@ -5,12 +5,12 @@ via Ansible. Not everything on Mac OS can be automated so there are manual steps
 followed to set up this environment. However, the Ansible playbook bears the majority of the
 responsibility.
 
-There are a number of approaches can be taken to run this playbook. As always, it's best to use
-tool versions that we know will work, so that this configuration is as reproducible as
-possible. However, that requires installing some Python tooling, which isn't realistic on a
-brand spankin new Mac computer.
+There are a number of approaches to running this playbook. As always, it's best to use tool
+versions that we know will work, so that this configuration is as reproducible as possible.
+However, that requires installing some Python tooling, which isn't realistic on a brand spankin
+new Mac computer.
 
-Therefore, this README provides the following two installation methods:
+As such, this README provides the following two installation methods:
 
 - Local Installation (from the target Mac to the target Mac)
 - Remote Installation (from another Mac computer to the target Mac, via SSH)
