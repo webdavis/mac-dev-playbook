@@ -8,6 +8,7 @@ homebrew_installed_packages:
   - bash-completion
   - bat
   - gawk
+  - gh
   - git
   - imagemagick
   - jq
