@@ -1,0 +1,4 @@
+- name: Agree to Xcode license
+  command: xcodebuild -license accept
+  when: not xcode_install_result | skipped
+  become: true

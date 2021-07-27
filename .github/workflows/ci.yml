@@ -1,0 +1,116 @@
+---
+name: CI
+'on':
+  pull_request:
+  push:
+    branches-ignore:
+      - 'main'
+  schedule:
+    - cron: "0 4 * * 4"
+
+jobs:
+
+  test-fresh:
+    name: Ansible Playbook (fresh)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - macos-10.15
+  
+    steps:
+      - name: Checkout the codebase
+        uses: actions/checkout@v2
+
+      - name: Uninstall GitHub Actions built-in browser installs
+        run: |
+          sudo rm -rf /Applications/Firefox.app
+          sudo rm -rf /Applications/Google\ Chrome.app
+
+      - name: Install Ansible
+        run: |
+          export PATH="$HOME/Library/Python/3.8/bin:/opt/homebrew/bin:$PATH"
+          sudo pip3 install --upgrade pip
+          pip3 install "ansible==4.3.0"
+
+      - name: Install Ansible collections and roles
+        run: ansible-galaxy install -r requirements.yml
+
+      - name: Provision the test environment variables
+        run: cp -f test/config.yml group_vars/all/main.yml
+
+      - name: Ensure the playbook syntax is okay
+        run: ansible-playbook main.yml --syntax-check
+
+      - name: Run the playbook
+        run: ansible-playbook main.yml
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+
+      - name: Ensure the playbook is idempotent
+        run: |
+          idempotence=$(mktemp)
+          ansible-playbook main.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+
+  test-versioned:
+    name: Ansible Playbook (versioned)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - macos-10.15
+  
+    steps:
+      - name: Checkout the codebase
+        uses: actions/checkout@v2
+
+      - name: Uninstall GitHub Actions built-in browser installs
+        run: |
+          sudo rm -rf /Applications/Firefox.app
+          sudo rm -rf /Applications/Google\ Chrome.app
+
+      - name: Retrieve Python version
+        run: echo "::set-output name=PYTHON_VERSION::$(cat .python-version)"
+        id: python_version
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ steps.python_version.outputs.PYTHON_VERSION }}
+
+      - name: Retrieve Poetry version
+        run: echo "::set-output name=POETRY_VERSION::$(cat .poetry-version)"
+        id: poetry_version
+
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ steps.poetry_version.outputs.POETRY_VERSION }}
+
+      - name: Install Python dependencies
+        run: poetry install
+
+      - name: Install Ansible collections and roles
+        run: poetry run ansible-galaxy install -r requirements.yml
+
+      - name: Set up the test environment.
+        run: cp -f test/config.yml group_vars/all/main.yml
+
+      - name: Ensure the playbook syntax is okay
+        run: poetry run ansible-playbook main.yml --syntax-check
+
+      - name: Run the playbook
+        run: poetry run ansible-playbook main.yml
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+
+      - name: Ensure the playbook is idempotent
+        run: |
+          idempotence=$(mktemp)
+          poetry run ansible-playbook main.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+        env:
+          ANSIBLE_FORCE_COLOR: '1'

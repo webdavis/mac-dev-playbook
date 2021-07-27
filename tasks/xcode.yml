@@ -1,0 +1,53 @@
+---
+- name: Get MAS account status
+  command: mas account
+  register: mas_account_result
+  failed_when: mas_account_result.rc > 1
+  check_mode: no
+  changed_when: false
+
+- name: List installed MAS apps.
+  command: mas list
+  register: mas_list
+  check_mode: no
+  changed_when: false
+  when: mas_account_result.rc == 0
+
+- name: Ensure Xcode is installed.
+  command: mas install "{{ item.id|default(item) }}"
+  with_items: "{{ xcode }}"
+  register: xcode_install_result
+  when: 
+    - mas_account_result.rc == 0
+    - (item.id | default(item) | string) not in mas_list.stdout
+  notify:
+    - Agree to Xcode license
+
+- name: Print xcode_install_result
+  ansible.builtin.debug:
+    var: xcode_install_result
+    verbosity: 2
+
+- name: Upgrade Xcode (if mas is configured).
+  command: "mas upgrade {{ item.id }}"
+  with_items: "{{ xcode }}"
+  when:
+    - mas_account_result.rc == 0
+    - item.upgrade
+
+# Xcode is required to compile swift-format, so this must be installed after mas -> Xcode.
+#  - swift-format
+- name: Ensure configured Xcode dependent packages are installed.
+  homebrew:
+    name: "{{ item.name | default(item) }}"
+    install_options: "{{ item.install_options | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ xcode_dependent_packages }}"
+  notify:
+    - Clear homebrew cache
+
+- name: Upgrade all homebrew packages (if configured).
+  homebrew: update_homebrew=yes upgrade_all=yes
+  when: homebrew_upgrade_all_packages
+  notify:
+    - Clear homebrew cache

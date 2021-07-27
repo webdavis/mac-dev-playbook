@@ -1,0 +1,43 @@
+---
+#
+# Ansible will automatically read this file prior to executing tasks.
+#
+
+homebrew_installed_packages:
+  - bash
+  - bash-completion
+  - bat
+  - gawk
+  - git
+  - git
+  - imagemagick
+  - jq
+  - nmap
+  - pv
+  - sqlite
+  - tree
+  - wget
+
+homebrew_taps:
+  - homebrew/core
+  - homebrew/cask
+
+homebrew_cask_appdir: /Applications
+homebrew_cask_apps:
+  - anki
+  - discord
+  - firefox
+  - google-chrome
+  - karabiner-elements
+  - keepassxc
+  - kitty
+  - slack
+  - spotify
+  - zoom
+
+# Cannot be installed in GA runner environment as mas no longer supports sign-in.
+mas_installed_apps: []
+
+configure_xcode: false
+
+configure_dock: false
