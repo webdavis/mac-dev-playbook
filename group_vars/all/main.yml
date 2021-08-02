@@ -13,7 +13,9 @@ homebrew_installed_packages:
   - imagemagick
   - jq
   - nmap
+  - poetry
   - pv
+  - pyenv
   - sqlite
   - tree
   - wget
@@ -31,6 +33,7 @@ homebrew_cask_apps:
   - karabiner-elements
   - keepassxc
   - kitty
+  - postman
   - slack
   - spotify
   - zoom
