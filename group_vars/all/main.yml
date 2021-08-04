@@ -40,7 +40,8 @@ homebrew_cask_apps:
   - zoom
 
 # Do NOT install Xcode using this role.
-mas_installed_apps: []
+mas_installed_apps:
+  - { id: 682658836, name: "GarageBand (10.4.3)"}
 
 # Set to 'true' to configure Xcode and dependent tools. (Requires that mas is installed.)
 configure_xcode: true
