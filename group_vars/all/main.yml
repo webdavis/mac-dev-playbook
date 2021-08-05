@@ -35,6 +35,7 @@ homebrew_cask_apps:
   - keepassxc
   - kitty
   - postman
+  - signal
   - slack
   - spotify
   - zoom
