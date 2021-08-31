@@ -28,6 +28,7 @@ homebrew_taps:
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
   - anki
+  - authy
   - discord
   - firefox
   - google-chrome
