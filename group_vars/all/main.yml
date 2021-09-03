@@ -39,6 +39,7 @@ homebrew_cask_apps:
   - microsoft-office
   - postman
   - signal
+  - skype
   - slack
   - spotify
   - zoom
