@@ -30,6 +30,7 @@ homebrew_cask_apps:
   - anki
   - authy
   - discord
+  - figma
   - firefox
   - google-chrome
   - karabiner-elements
