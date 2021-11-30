@@ -42,6 +42,7 @@ homebrew_cask_apps:
   - skype
   - slack
   - spotify
+  - todoist
   - visual-studio-code
   - zoom
 
