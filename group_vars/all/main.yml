@@ -17,6 +17,7 @@ homebrew_installed_packages:
   - poetry
   - pv
   - pyenv
+  - secretive
   - sqlite
   - tree
   - wget
