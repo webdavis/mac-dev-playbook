@@ -3,6 +3,11 @@
 # Ansible will automatically read this file prior to executing tasks.
 #
 
+homebrew_taps:
+  - homebrew/core
+  - homebrew/cask
+  - homebrew/cask-fonts
+
 homebrew_installed_packages:
   - bash
   - bash-completion
@@ -24,11 +29,6 @@ homebrew_installed_packages:
   - sqlite
   - tree
   - wget
-
-homebrew_taps:
-  - homebrew/core
-  - homebrew/cask
-  - homebrew/cask-fonts
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
