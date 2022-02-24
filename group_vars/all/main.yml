@@ -8,6 +8,8 @@ homebrew_installed_packages:
   - bash-completion
   - bat
   - croc
+  - font-fira-code
+  - font-fira-Code-nerd-font
   - gawk
   - gh
   - git
@@ -26,6 +28,7 @@ homebrew_installed_packages:
 homebrew_taps:
   - homebrew/core
   - homebrew/cask
+  - homebrew/cask-fonts
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
