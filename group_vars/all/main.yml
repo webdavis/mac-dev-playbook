@@ -29,6 +29,7 @@ homebrew_installed_packages:
   - sqlite
   - tree
   - wget
+  - zoxide
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
