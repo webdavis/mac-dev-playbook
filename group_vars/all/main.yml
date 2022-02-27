@@ -23,6 +23,7 @@ homebrew_installed_packages:
   - nmap
   - nvm
   - poetry
+  - pam-reattach
   - pv
   - pyenv
   - secretive
