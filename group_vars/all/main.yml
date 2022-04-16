@@ -13,6 +13,7 @@ homebrew_installed_packages:
   - bash-completion
   - bat
   - croc
+  - exa
   - font-fira-code
   - font-fira-Code-nerd-font
   - gawk
