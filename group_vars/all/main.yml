@@ -34,7 +34,6 @@ homebrew_installed_packages:
   - secretive
   - sqlite
   - tree
-  - owenthereal/upterm/upterm
   - wget
   - zoxide
 
