@@ -19,6 +19,7 @@ homebrew_installed_packages:
   - gh
   - git
   - git-delta
+  - glow
   - imagemagick
   - jq
   - nmap
