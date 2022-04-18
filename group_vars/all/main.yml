@@ -7,6 +7,7 @@ homebrew_taps:
   - homebrew/core
   - homebrew/cask
   - homebrew/cask-fonts
+  - homebrew/cask-upgrade
 
 homebrew_installed_packages:
   - bash
