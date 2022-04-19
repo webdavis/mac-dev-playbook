@@ -65,6 +65,7 @@ mas_installed_apps:
   - { id: 961632517,  name: "Be Focused Pro - Focus Timer (2.1.1)" }
   - { id: 682658836,  name: "GarageBand (10.4.3)" }
   - { id: 1270075435, name: "Strongbox (1.15.18)" }
+  - { id: 957734279,  name: "Toggl Track - Hours & Time (7.5.441)" }
   - { id: 1191449274, name: "ToothFairy (2.7.5)" }
 
 # Set to 'true' to configure Xcode and dependent tools. (Requires that mas is installed.)
