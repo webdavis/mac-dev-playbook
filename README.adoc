@@ -1,0 +1,210 @@
+= mac-dev-playbook
+:source-highlighter: highlighterbash
+:toc:
+
+:new-shell-reminder: This will need to be run from every new shell.
+:ansible-cmd: ansible-playbook main.yml
+:ansible-local: {ansible-cmd} --ask-become-pass
+:ansible-remote: {ansible-cmd} --limit remote
+:ansible-tags: --tags "mas,xcode"
+
+This playbook installs the tools and configuration that I use on my Mac development machine,
+via https://www.ansible.com/[Ansible]. Not everything on macOS can be automated so there are
+manual steps that must be followed to set up this environment. However, the Ansible playbook
+bears the majority of the responsibility.
+
+There are a number of approaches to running this playbook. As always, it's best to use tool
+versions that we know will work, so that this configuration is as reproducible as possible.
+However, that requires installing some Python tooling, which isn't realistic on a brand spankin
+new Mac computer.
+
+As such, this README provides the following two installation methods:
+
+[horizontal]
+Local Installation:: Target Mac -> Target Mac
+
+Remote Installation:: Some other Mac -> Target Mac (_via SSH_)
+
+
+== Local installation
+
+.Instructions
+[%collapsible]
+====
+
+1. Ensure Apple's command line tools are installed by running the following command in the
+   terminal:
++
+[source,bash]
+----
+$ xcode-select -install
+----
+
+2. Add Python 3 to your `$PATH`:
++
+[source,bash]
+----
+$ export PATH="$HOME/Library/Python/3.8/bin:/opt/homebrew/bin:$PATH"
+----
+
+3. Upgrade Pip:
++
+[source,bash]
+----
+sudo pip3 install --upgrade pip
+----
+
+4. Install Ansible: 
++
+[source,bash]
+----
+$ pip3 install ansible
+----
+
+5. Clone this repository to your local drive:
++
+[source,bash]
+----
+$ git clone https://github.com/stephenalandavis/mac-dev-playbook.git
+----
+
+6. Download the required Ansible roles:
++
+[source,bash]
+----
+$ ansible-galaxy install -r requirements.yml
+----
+
+7. Open the App Store and **sign-in using your Apple ID** email, password, and Two-Factor
+   Authentication (if it's turned on).
++
+8. Run the playbook:
++
+[source,bash,subs=+attributes]
+----
+$ {ansible-local}
+----
+IMPORTANT: When prompted for the `BECOME` password, enter your admin password
+
+====
+
+== Remote installation
+
+If this is your first time setting up the development environment for this project, then follow
+the instructions in link:docs/mac-dev-environment.md[mac-dev-environment.md], instead. The
+following *Instructions* will assume that you've already done this and that you are returning to
+work on this project.
+
+.Instructions
+[%collapsible]
+====
+
+1. *Setup SSH*
++
+From the Mac that you want to connect to (the target), run the following command:
++
+[source,bash]
+----
+$ sudo systemsetup -setremotelogin on
+----
++
+Edit the link:hosts.ini[hosts.ini] file and add the following line under `[remote]`, like so:
++
+[source,ini]
+----
+[remote]
+<ip address or hostname of target mac> ansible_user=<mac ssh username>
+----
++
+TIP: If you don't use SSH keys and instead would like to supply an SSH password, make sure to pass
+the `--ask-pass` flag to the `ansible-playbook` command.
+
+2. *Use https://github.com/pyenv/pyenv[pyenv] to set the Python version*
++
+The following command instructs pyenv to switch to the version of Python tracked in the
+link:.python-version[.python-version] file that lives at the root of this project:
++
+[source,bash]
+----
+$ eval "$(pyenv init -)"
+----
++
+IMPORTANT: {new-shell-reminder}
+
+3. *Install Ansible and its dependencies with https://python-poetry.org/[Poetry]*
++
+[source,bash]
+----
+$ poetry install
+----
+
+4. *Enter the Python environment*
++
+[source,bash]
+----
+$ poetry shell
+----
++
+IMPORTANT: {new-shell-reminder}
+
+====
+
+== Running the playbook locally
+
+.Command
+[%collapsible]
+====
+
+[source,bash,subs=+attributes]
+----
+$ {ansible-local}
+----
+
+====
+
+
+
+== Running the playbook from a remote machine
+
+.Command
+[%collapsible]
+====
+
+[source,bash,subs=+attributes]
+----
+$ {ansible-remote}
+----
+IMPORTANT: Remember when running remotely, if you don't use SSH keys then you need to supply
+an SSH password. +
+To do so pass the `--ask-pass` flag to the `ansible-playbook` command.
+
+====
+
+
+
+== Running a specific set of tagged tasks
+
+You can filter which part of the playbook to run by specifying a set of tags.
+
+.Commands
+[%collapsible]
+====
+
+Locally::
++
+[source,bash,subs=+attributes]
+----
+$ {ansible-local} {ansible-tags}
+----
+
+Remote::
++
+[source,bash,subs=+attributes]
+----
+$ {ansible-remote} {ansible-tags}
+----
+IMPORTANT: Remember when running remotely, if you don't use SSH keys then you need to supply
+an SSH password. +
+To do so pass the `--ask-pass` flag to the `ansible-playbook` command.
+
+====

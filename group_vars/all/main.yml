@@ -3,30 +3,47 @@
 # Ansible will automatically read this file prior to executing tasks.
 #
 
+homebrew_taps:
+  - homebrew/core
+  - homebrew/cask
+  - homebrew/cask-fonts
+  - homebrew/cask-upgrade
+
 homebrew_installed_packages:
   - bash
   - bash-completion
   - bat
+  - croc
+  - exa
+  - font-fira-code
+  - font-fira-Code-nerd-font
   - gawk
   - gh
   - git
+  - git-delta
+  - glow
+  - hexyl
+  - httpie
   - imagemagick
   - jq
+  - mitmproxy
+  - mosh
   - nmap
   - nvm
   - poetry
+  - pam-reattach
   - pv
   - pyenv
+  - secretive
   - sqlite
+  - tldr
   - tree
   - wget
-
-homebrew_taps:
-  - homebrew/core
-  - homebrew/cask
+  - zoxide
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
+  - alfred
   - anki
   - authy
   - discord
@@ -38,6 +55,7 @@ homebrew_cask_apps:
   - kitty
   - microsoft-office
   - postman
+  - proxyman
   - signal
   - skype
   - slack
