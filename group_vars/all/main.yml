@@ -26,6 +26,7 @@ homebrew_installed_packages:
   - httpie
   - imagemagick
   - jq
+  - mitmproxy
   - mosh
   - nmap
   - nvm
